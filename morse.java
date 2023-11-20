@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class morse {
@@ -95,16 +96,24 @@ public class morse {
         // menu
         System.out.println("\n\n\t\t\t--- Tradutor letras -> morse ---\n");
         System.out.println("1. Morse --> letras\n2. Letras --> morse\n");
-        do {
-            System.out.print("\tSua escolha: ");
-            opcao = entrada.nextInt();
-        } while (opcao != 1 && opcao != 2);
-
-        if (opcao == 1)
+        try {
+            do {
+                System.out.print("\tSua escolha: ");
+                opcao = entrada.nextInt();
+            } while (opcao != 1 && opcao != 2);
+            if (opcao == 1)
             traduzParaLetras();
 
         if (opcao == 2)
             traduzParaMorse();
+        } catch ( InputMismatchException e) {
+            System.out.println("\nErro! Apenas números são permitidos.\n\n");
+        }
+        finally{
+            entrada.close();
+        }
+
+        
 
         entrada.close();
     }
