@@ -49,22 +49,22 @@ public class calculadorJuros {
                 System.out.print("Digite o valor inicial: ");
                 capital = entrada.nextDouble();
             } while (capital < 0);
-    
+
             do {
                 System.out.print("Digite a taxa de juros por mês, em porcentagem: ");
                 taxaJuros = entrada.nextDouble();
             } while (taxaJuros < 0);
-    
+
             do {
                 System.out.print("Digite o tempo, em meses: ");
                 tempo = entrada.nextInt();
             } while (tempo < 0);
-    
+
             montante = capital * Math.pow((1 + (taxaJuros / 100)), tempo);
-    
+
             BigDecimal resMontante = BigDecimal.valueOf(montante).setScale(2, RoundingMode.HALF_UP);
             montante = resMontante.doubleValue();
-    
+
         } catch (Exception e) {
             System.out.println("\nErro! Apenas números são aceitos\n");
         }
@@ -76,6 +76,7 @@ public class calculadorJuros {
 
         String sRepetir;
         char menu = 's';
+        boolean erro = false;
 
         // Programa
         while (menu == 's') {
@@ -94,61 +95,68 @@ public class calculadorJuros {
                     opcao = entrada.nextInt();
                 } while (opcao != 1 && opcao != 2);
             } catch (InputMismatchException e) {
-                System.out.println("\nErro! Apenas números inteiros são aceitos");
+                System.out.println("\nErro! Apenas números inteiros são aceitos\n\n");
+                erro = true;
             }
-            
+
             // Opções
 
-            // Juros Simples
-            if (opcao == 1) {
-                System.out.println("\n\n\t\t--- Juros Simples ---\n");
-                while (repetir == 's') {
+            if (erro == false) {
+                // Juros Simples
+                if (opcao == 1) {
+                    System.out.println("\n\n\t\t--- Juros Simples ---\n");
+                    while (repetir == 's') {
 
-                    double valorFinal = jSimples();
-                    if (valorFinal != 0)
-                        System.out.println("\n\tValor final: R$ " + valorFinal + "\n");
+                        double valorFinal = jSimples();
+                        if (valorFinal != 0)
+                            System.out.println("\n\tValor final: R$ " + valorFinal + "\n");
 
-                    // Repetir a conta dos Juros Simples
-                    do {
-                        System.out.print("Deseja fazer novamente? (s/n): ");
-                        entrada.nextLine();
-                        sRepetir = entrada.nextLine();
-                        repetir = sRepetir.charAt(0);
-                    } while (repetir != 's' && repetir != 'n');
-                    System.out.println("\n\t\t--------------------\n");
+                        // Repetir a conta dos Juros Simples
+                        do {
+                            System.out.print("Deseja fazer novamente? (s/n): ");
+                            entrada.nextLine();
+                            sRepetir = entrada.nextLine();
+                            repetir = sRepetir.charAt(0);
+                        } while (repetir != 's' && repetir != 'n');
+                        System.out.println("\n\t\t--------------------\n");
+                    }
+
                 }
 
-            }
+                // Juros compostos
+                else if (opcao == 2) {
+                    System.out.println("\n\n\t\t--- Juros Compostos ---\n");
+                    while (repetir == 's') {
 
-            // Juros compostos
-            else if (opcao == 2) {
-                System.out.println("\n\n\t\t--- Juros Compostos ---\n");
-                while (repetir == 's') {
+                        double valorFinal = jCompostos();
+                        if (valorFinal != 0)
+                            System.out.println("\n\tValor final: R$ " + valorFinal + "\n");
 
-                    double valorFinal = jCompostos();
-                    if (valorFinal != 0)
-                        System.out.println("\n\tValor final: R$ " + valorFinal + "\n");
-                
-                    // Repetir a conta dos Juros Compostos
-                    do {
-                        System.out.print("Deseja fazer novamente? (s/n): ");
-                        entrada.nextLine();
-                        sRepetir = entrada.nextLine();
-                        repetir = sRepetir.charAt(0);
-                    } while (repetir != 's' && repetir != 'n');
-                    System.out.println("\n\t\t-----------------------\n");
+                        // Repetir a conta dos Juros Compostos
+                        do {
+                            System.out.print("Deseja fazer novamente? (s/n): ");
+                            entrada.nextLine();
+                            sRepetir = entrada.nextLine();
+                            repetir = sRepetir.charAt(0);
+                        } while (repetir != 's' && repetir != 'n');
+                        System.out.println("\n\t\t-----------------------\n");
+                    }
                 }
+
+                // Voltar para o menu Encerrar o programa
+                System.out.print("\nVocê deseja voltar ao menu? (s/n) ");
+                String sMenu = entrada.nextLine();
+                menu = sMenu.charAt(0);
+
+            
+
+            // Fim da calculadora
+            System.out.println("\n\n\tMuito obrigado por usar essa ferramenta, aceito sugestões :)\n");
             }
 
-            // Voltar para o menu Encerrar o programa
-            System.out.print("\nVocê deseja voltar ao menu? (s/n) ");
-            String sMenu = entrada.nextLine();
-            menu = sMenu.charAt(0);
-
+            else
+                break;
         }
-
-        // Fim da calculadora
-        System.out.println("\n\n\tMuito obrigado por usar essa ferramenta, aceito sugestões :)\n");
 
         entrada.close();
     }
