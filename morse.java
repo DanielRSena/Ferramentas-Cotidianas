@@ -13,70 +13,76 @@ public class morse {
 
     // importante a String morse[] ter seu respectivo símbolo na mesma posição do char simbolo[]
 
-    static char lTraduzida;
-    static int taman = morse.length;
 
     // tradução letras --> morse
     static void traduzParaMorse() {
 
-        // coleta e tratamento da frase
+        char lTraduzida;
+        String palavra;
+        int tamanho;
+
+        // coleta e trata a frase
         System.out.print("\nColoque a frase: ");
         entrada.nextLine();
-        String palavra = entrada.nextLine();
-        palavra = palavra.toLowerCase();
-        int tamanho = palavra.length();
+        palavra = entrada.nextLine().toLowerCase(); //pega a frase e já a deixa minpuscula
+        tamanho = palavra.length();
 
-        // tranformando a String em um vetor de char
+        // transforma a frase(String) em um vetor de char(letra)
         char letra[] = new char[tamanho];
-        for (int cont = 0; cont < tamanho; cont++) {
-            letra[cont] = palavra.charAt(cont);
-        }
+        for (int cont = 0; cont < tamanho; cont++) { letra[cont] = palavra.charAt(cont); }
 
         // envio de dados para o tradutor e início da tela final
         System.out.println("\n\n\t\t--- Tradução letras --> morse ---");
         System.out.print("\nCódigo: " + palavra + "\n\nEm morse: ");
 
+        //faz o processo de buscar a letra no vetor de siímbolos morse e printá-la
         for (int i = 0; i < tamanho; i++) { // pega cada símbolo da palavra digitada...
             lTraduzida = letra[i]; // e o atribui para a variável lTraduzida.
-            for (int j = 0; j < taman; j++) { // a lTraduzida é comparada com todos os símbolos de simbolos[]
-                if (lTraduzida == simbolos[j]) // se a lTraduzida for correspondente a um símbolo...
-                    System.out.print(morse[j]); // o código correspondente no vetor morse[] é printado
+            for (int j = 0; j < morse.length; j++) { // a lTraduzida é comparada com todos os símbolos de simbolos[]
+                if (lTraduzida == simbolos[j]) System.out.print(morse[j]); 
+                // se a lTraduzida for correspondente a um símbolo, o código correspondente no vetor morse[] é printado
             }
 
-            if (lTraduzida == ' ') { // separa palavras
-                System.out.print("/ ");
-            } else
-                System.out.print("  "); // separa letras
+            if (lTraduzida == ' ')  System.out.print("/ "); // separa palavras
+            else System.out.print("  "); // separa letras
         }
+
         System.out.println("\n");
     }
 
     // tradução morse --> letras
     static void traduzParaLetras() {
 
-        String codMorse, letra = "";
+        String codMorse, ditOuDah = ""; //dit e dah são os nomes que damos, no morse, aos pontos e traços, respectivamente
 
         System.out.print("\n\t\t--- Tradução morse --> letras ---\n\n1. separe as letras com a tecla espaço;\n2. separe palavras com a tecla '/' e a tecla espaço ( / );\n3. quando terminar o código, encerre com a tecla espaço.\n\nCódigo em morse: ");
+
         entrada.nextLine();
         codMorse = entrada.nextLine();
 
         System.out.print("\nMensagem decodificada: ");
 
-        for (int i = 0; i < codMorse.length(); i++) {
+        for (int i = 0; i < codMorse.length(); i++) { //percorre cada dígito que o usuário colocou
 
-            if(codMorse.charAt(i) == '/')
-                System.out.print(" ");
-            else if (codMorse.charAt(i) != ' ' && codMorse.charAt(i) != '/') 
-                    letra += codMorse.charAt(i);
-            else {
-                for (int j = 0; j < taman; j++) {
-                    if (letra.equals(morse[j]))
+            if(codMorse.charAt(i) == '/') System.out.print(" "); //se o usuário coloca o '/', entende-se que é uma separação de palavras
+
+            else if (codMorse.charAt(i) != ' ' && codMorse.charAt(i) != '/') ditOuDah += codMorse.charAt(i); //se não é um espaço ou uma barra (/) é adicionado na frase.
+
+            else { //se o caractere é um espaço, ela cai nesse aqui
+
+                for (int j = 0; j < morse.length; j++) { //como a variável 'ditOuDah' já está com alguns dits e dahs do else if, já temos uma letra que pode ser procurada no vetor 'morse'
+
+                    if (ditOuDah.equals(morse[j])) {
                         System.out.print(simbolos[j]);
+                        break; // se o código correspondente foi achado, não há necessidade de continuar o for
+                    }
                 }
-                letra = "";
+
+                ditOuDah = ""; //depois que todo o processo é feito, ditOuDah é zerado para dar espaço à um possível próximo caractere
             }
 
         }
+
         System.out.println("\n");
 
     }
@@ -84,26 +90,27 @@ public class morse {
     // tela inicial
     public static void main(String[] args) {
 
-        int opcao;
+        int opcao = 0;
 
         // menu
         System.out.println("\n\n\t\t\t--- Tradutor letras -> morse ---\n");
-        System.out.println("1. Morse --> letras\n2. Letras --> morse\n");
-        try {
-            do {
-                System.out.print("\tSua escolha: ");
-                opcao = entrada.nextInt();
-            } while (opcao != 1 && opcao != 2);
-            if (opcao == 1)
-            traduzParaLetras();
+        System.out.println("1. Morse --> letras\n2. Letras --> morse");
 
-        if (opcao == 2)
-            traduzParaMorse();
-        } catch ( InputMismatchException e) {
-            System.out.println("\nErro! Apenas números são permitidos.\n\n");
+        while (true) {
+            try {
+                do {
+                    System.out.print("\n\tSua escolha: "); opcao = entrada.nextInt();
+                    if (opcao != 1 && opcao != 2) { System.out.println("\nSelecione apenas 1 ou 2"); }
+                } while (opcao != 1 && opcao != 2);
+                break;
+                
+            } catch ( InputMismatchException e) {
+                System.out.println("\nErro! Apenas números são permitidos.");
+                entrada.nextLine();
+            }
         }
-        finally{
-            entrada.close();
-        }
+
+        if (opcao == 1) traduzParaLetras();
+        else traduzParaMorse();
     }
 }
