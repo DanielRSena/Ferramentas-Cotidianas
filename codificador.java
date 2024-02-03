@@ -6,14 +6,14 @@ public class codificador {
     public static void main(String[] args) {
         
         Scanner entrada = new Scanner(System.in, "latin1");
+        String codigo = "", mensagem;
         char menu = 's';
         int opcao = 0, maneira = 0;
-        String codigo = "", mensagem;
 
         //funcionará enquanto o user quiser
         while (menu == 's') {
 
-            System.out.println("\n\n\t\t\t--- Codificador ---\n\n1. Morse \n2. Cifra de César\n"); // menu
+            System.out.println("\n\n\t\t\t--- Codificador ---\n\n1. Morse \n2. Cifra de César"); // menu
 
             //bloco para escolher qual código será usado
             while (true) {
@@ -28,7 +28,7 @@ public class codificador {
                     break;
 
                 } catch (InputMismatchException e) {
-                    System.out.println("\nErro! Apenas números são permitidos.");
+                    System.out.println("\nErro! Apenas números são permitidos");
                     entrada.nextLine();
                 }
             }
@@ -36,7 +36,7 @@ public class codificador {
             if(opcao == 1) codigo = "Morse";
             else codigo = "Cifra de César";
 
-            System.out.println("\nComo usará usado o codificador?\n\n\t1. " + codigo + " -> Mensagem\n\t2. Mensagem -> " + codigo + " \n");
+            System.out.println("\nComo usará o codificador?\n\n\t1. " + codigo + " -> Mensagem\n\t2. Mensagem -> " + codigo + " \n\n");
 
             //bloco que verifica se quer codificar ou decodificar
             while (true) {
@@ -51,7 +51,7 @@ public class codificador {
                     break;
 
                 } catch (InputMismatchException e) {
-                    System.out.println("\nErro! Apenas números são permitidos.");
+                    System.out.println("\nErro! Apenas números são permitidos");
                     entrada.nextLine();
                 }
             }

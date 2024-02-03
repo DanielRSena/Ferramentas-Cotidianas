@@ -5,5 +5,5 @@ Nesse repositório terão vários utilitários que podem ser usados na sua vida!
 ## Algumas delas são:
 
 1. Ciclo de estudos: ao digitar suas matérias, dificuldades e horas de que pretende estudar, será feito um planejamento semanal personalizado; <br><br>
-2. Tradutor de morse: quer traduzir um código morse para textos ou vice-versa? Esse programa pode te ajudar!; <br><br>
+2. Codificador: quer traduzir uma cifra de César ou código morse para textos e vice-versa? Esse programa pode te ajudar!; <br><br>
 3. Calculadora de juros: quer saber quanto será o total de um empréstimo ou prestação? Use-a para ter uma base, seja para juros simples ou compostos.  
