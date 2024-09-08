@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "calculadorJuros",
+            "request": "launch",
+            "mainClass": "calculadorJuros",
+            "projectName": "Ferramentas-Cotidianas_cc0fe6d4"
+        },
+        {
+            "type": "java",
+            "name": "cicloEstudos",
+            "request": "launch",
+            "mainClass": "cicloEstudos",
+            "projectName": "Ferramentas-Cotidianas_cc0fe6d4"
+        },
+        {
+            "type": "java",
+            "name": "codificador",
+            "request": "launch",
+            "mainClass": "codificador",
+            "projectName": "Ferramentas-Cotidianas_cc0fe6d4"
+        }
+    ]
+}

@@ -2,22 +2,34 @@ package objsCodificador;
 import java.util.Scanner;
 
 public class Geral {
-    
-    static Scanner scanner = new Scanner(System.in);
 
-    public static char returnOption(){
+    public static char voltarAoMenu(Scanner entrada){
 
-        char letter = 's';
-        String word;
-
-        System.out.println();
+        char letra = 's';
+        String palavra;
 
         do {
-            System.out.print("\n\tDo you want to return to menu? (s/n): ");
-            word = scanner.nextLine();
-            letter = word.charAt(0);
-        } while(letter != 's' && letter != 'n');
+            System.out.print("\n\tDeseja voltar para o menu? (s/n): ");
+            palavra = entrada.nextLine();
+            letra = palavra.charAt(0);
+        } while(letra != 's' && letra != 'n');
 
-        return letter;
+        return letra;
+    }
+
+    public static int pedirInt(Scanner entrada, String msg) {
+
+        int num = 0;
+
+        while (true) {
+            try {
+                System.out.print(msg);
+                num = entrada.nextInt();
+                return num;
+            } catch (Exception e) {
+                entrada.nextLine();
+                System.out.println("\nApenas números são permitidos");
+            }
+        }
     }
 }

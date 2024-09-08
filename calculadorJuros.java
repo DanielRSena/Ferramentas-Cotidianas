@@ -4,11 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class calculadorJuros {
-
-    static Scanner entrada = new Scanner(System.in, "latin1"); //deixei estático pois há dois locais que é usado
-
     // Função juros simples
-    static double calculaJuros(int operacao) {
+    static double calcularJuros(Scanner entrada, int operacao) {
 
         double valorFinal = 0.0, capital, taxaJuros;
         int tempo;
@@ -43,47 +40,49 @@ public class calculadorJuros {
             } catch (InputMismatchException e) { entrada.nextLine();}
         }
 
-        if(operacao == 1) valorFinal = capital + capital * (taxaJuros / 100) * tempo;   //se for juros simples faz essa conta
-        else valorFinal = capital * Math.pow((1 + (taxaJuros / 100)), tempo);           //faz caso seja juros compostos
+        if(operacao == 1) valorFinal = capital + capital * (taxaJuros / 100) * tempo;  
+        else valorFinal = capital * Math.pow((1 + (taxaJuros / 100)), tempo);           
 
-        BigDecimal resJuros = BigDecimal.valueOf(valorFinal).setScale(2, RoundingMode.HALF_UP); //arredonda o valor pra duas casas
-        valorFinal = resJuros.doubleValue(); //atribui o valor arredondado para o valor final
+        BigDecimal resJuros = BigDecimal.valueOf(valorFinal).setScale(2, RoundingMode.HALF_UP); 
+        valorFinal = resJuros.doubleValue();
 
         return valorFinal;
     }
 
-    static char continuaOpcao(){
+    static char continuarOpcao(Scanner entrada, String msg) {
         
         String sRepetir;
-        char repetir;
+        char repete = ' ';
 
-        do {
-            System.out.print("Deseja fazer novamente? (s/n): ");
-            entrada.nextLine();
-            sRepetir = entrada.nextLine();
-            repetir = sRepetir.charAt(0);
-        } while (repetir != 's' && repetir != 'n');
-        System.out.println();
-        
-        return repetir;
+        try {
+            do {
+                System.out.print(msg);
+                sRepetir = entrada.nextLine().toLowerCase();
+                repete = sRepetir.charAt(0);
+            } while(repete != 's' && repete != 'n');
+        } catch (Exception e) { 
+            entrada.nextLine(); 
+        }
+        return repete;
     }
 
     // Calculadora de Juros
     public static void main(String[] args) {
 
+        Scanner entrada = new Scanner(System.in);
         char menu = 's';
 
         // Programa
-        while (menu == 's') { //fará enquanto o usuário quiser usa a calculadora
+        while (menu == 's') {
 
             int opcao = 0;
             char repetir = 's';
             double valorFinal = 0;
             
-            System.out.println("\n\n\t\t--- Calculador de juros ---\n\nDigite o tipo de juros que quer calcular\n\n1. Juros simples\n2. Juros compostos\n"); // Home
+            System.out.println("\n\n\t\t--- Calculador de juros ---\n\nDigite o tipo de juros que quer calcular\n\n1. Juros simples\n2. Juros compostos\n");
 
             // Escolha da operação
-            while (true) { //fará enquanto não escolher 1 ou 2
+            while (true) {
                 try {
                     do {
                         System.out.print("\tSua escolha: ");
@@ -94,26 +93,16 @@ public class calculadorJuros {
             }
 
             // Lógica de juros
-            while (repetir == 's') { //fará enquanto o usuário quiser continuar a operação
-
-                valorFinal = calculaJuros(opcao); //manda a opção para o método juros retornar o valor final correspondente
-                    
-                System.out.println("\n\tValor final: R$ " + valorFinal + "\n"); //printa o montante
-
-                repetir = continuaOpcao(); //verifica se o usuário quer repetir a operação
+            while (repetir == 's') {
+                valorFinal = calcularJuros(entrada, opcao); 
+                System.out.println("\n\tValor final: R$ " + valorFinal + "\n");
+                entrada.nextLine();
+                repetir = continuarOpcao(entrada, "Deseja fazer novamente? (s/n): ");
+                System.out.println();
             }
-
-            // Voltar para o menu ou encerrar o programa
-            do {
-                System.out.print("Deseja voltar ao menu? (s/n) ");
-                String sMenu = entrada.nextLine(); 
-                menu = sMenu.charAt(0);
-            } while (menu != 's' && menu != 'n');
-
+            menu = continuarOpcao(entrada, "Deseja voltar ao menu? (s/n): ");
         }
-
-        System.out.println("\n\n\tMuito obrigado por usar essa ferramenta, aceito sugestões :)\n"); // Mensagem de fim da calculadora
-
+        System.out.println("\n\tMuito obrigado por usar essa ferramenta, aceito sugestões :)\n\n");
         entrada.close();
     }
 }

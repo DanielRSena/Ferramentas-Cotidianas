@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import objsCodificador.*;
 
@@ -6,70 +5,37 @@ public class codificador {
     public static void main(String[] args) {
         
         Scanner entrada = new Scanner(System.in, "latin1");
-        String codigo = "", mensagem;
+        String codigo, mensagem;
         char menu = 's';
         int opcao = 0, maneira = 0;
 
-        //funcionará enquanto o user quiser
         while (menu == 's') {
 
-            System.out.println("\n\n\t\t\t--- Codificador ---\n\n1. Morse \n2. Cifra de César"); // menu
+            System.out.println("\n\n\t\t\t--- Codificador ---\n\n1. Cifra de César \n2. Morse\n");
 
-            //bloco para escolher qual código será usado
-            while (true) {
-                try {
+            do {
+                opcao = Geral.pedirInt(entrada, "\tSua escolha: ");
+                if (opcao != 1 && opcao != 2) System.out.println("\nSelecione apenas 1 ou 2");
+            } while (opcao != 1 && opcao != 2);
 
-                    do {
-
-                        System.out.print("\n\tSua escolha: ");
-                        opcao = entrada.nextInt();
-                        if (opcao != 1 && opcao != 2) System.out.println("\nSelecione apenas 1 ou 2");
-                    } while (opcao != 1 && opcao != 2);
-                    break;
-
-                } catch (InputMismatchException e) {
-                    System.out.println("\nErro! Apenas números são permitidos");
-                    entrada.nextLine();
-                }
-            }
-
-            if(opcao == 1) codigo = "Morse";
-            else codigo = "Cifra de César";
+            codigo = (opcao == 1) ? "Cifra de César" : "Morse";
 
             System.out.println("\nComo usará o codificador?\n\n\t1. " + codigo + " -> Mensagem\n\t2. Mensagem -> " + codigo + " \n\n");
 
-            //bloco que verifica se quer codificar ou decodificar
-            while (true) {
+            do {
+                maneira = Geral.pedirInt(entrada, "\tSua escolha: ");
+                if (maneira != 1 && maneira != 2) System.out.println("\nSelecione apenas 1 ou 2");
+            } while (maneira != 1 && maneira != 2);  
 
-                try {
-
-                    do {
-                        System.out.print("\n\tSua escolha: ");
-                        maneira = entrada.nextInt();
-                        if (maneira != 1 && maneira != 2) System.out.println("\nSelecione apenas 1 ou 2");
-                    } while (maneira != 1 && maneira != 2);
-                    break;
-
-                } catch (InputMismatchException e) {
-                    System.out.println("\nErro! Apenas números são permitidos");
-                    entrada.nextLine();
-                }
+            if(opcao == 1) {
+                int num = Geral.pedirInt(entrada, "\nDigite a chave: ");
+                mensagem = CifraDeCesar.traduzir(entrada, maneira, num);
             }
+            else mensagem = (maneira == 1) ? Morse.decodificar(entrada) : Morse.codificar(entrada);
 
-            if (opcao == 1) { 
+            System.out.println("\nMensagem: " + mensagem + "\n");
 
-                if (maneira == 1) mensagem = Morse.paraLetras();
-                else mensagem = Morse.letrasParaMorse();
-                System.out.println("\nA mensagem codificada é: " + mensagem + "\n");
-            }
-            else {
-
-                int num = CesarCifra.findKey();
-                mensagem = CesarCifra.traduza(maneira, num);
-                System.out.println("\nA mensagem codificada é: " + mensagem + "\n");
-            }
-
-            menu = Geral.returnOption();
+            menu = Geral.voltarAoMenu(entrada);
             System.out.println("\n");
         }
         entrada.close();
