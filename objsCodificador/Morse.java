@@ -34,6 +34,7 @@ public class Morse {
 
         System.out.print("\n1. separe as letras com a tecla espaço;\n2. separe palavras com a tecla '/' e a tecla espaço ( / ).\n\nCódigo em morse: ");
 
+        entrada.nextLine();
         codMorse = entrada.nextLine().toLowerCase();
         codMorse += " ";
 
